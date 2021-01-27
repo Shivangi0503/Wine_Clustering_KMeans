@@ -6,8 +6,7 @@ This repo consists of a simple clustering of the famous Wine dataset's using K-m
 [Wine dataset](https://www.kaggle.com/harrywang/wine-dataset-for-clustering) is taken from Kaggle. The type of wine information was removed so that it can be used for clustering. It contains total of 13 columns, the attributes on the basis of which each wine can be grouped. This information was collected for three different kind of wines, and our K-means algorithm was able to prove that. There are total 178 wine entry (rows 178)
 
 ### Environment
-<pre><code>
-Ubuntu 20.0.4
+<pre><code>Ubuntu 20.0.4
 Python 3.8.5
 Numpy 1.19.4
 Pandas 1.1.4
