@@ -1,4 +1,3 @@
-import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -46,6 +45,16 @@ def pca_embeddings(df_scaled):
     print('Explained variation per principal component: {}'.format(pca_2.explained_variance_ratio_))
     print('Cumulative variance explained by 2 principal components: {:.2%}'.format(
         np.sum(pca_2.explained_variance_ratio_)))
+
+    # Results from pca.components_
+    dataset_pca = pd.DataFrame(abs(pca_2.components_), columns=df_scaled.columns, index=['PC_1', 'PC_2'])
+    print('\n\n', dataset_pca)
+    
+    print("\n*************** Most important features *************************")
+    print('As per PC 1:\n', (dataset_pca[dataset_pca > 0.3].iloc[0]).dropna())
+    print('\n\nAs per PC 2:\n', (dataset_pca[dataset_pca > 0.3].iloc[1]).dropna())
+    print("\n******************************************************************")
+
     return pca_2_result, pca_2
 
 
@@ -102,7 +111,7 @@ def visualizing_results(pca_result, label, centroids_pca):
     x = pca_result[:, 0]
     y = pca_result[:, 1]
 
-    plt.scatter(x, y, c=label, alpha=0.5, s= 200)  # plot different colors per cluster
+    plt.scatter(x, y, c=label, alpha=0.5, s=200)  # plot different colors per cluster
     plt.title('Wine clusters')
     plt.xlabel('PCA 1')
     plt.ylabel('PCA 2')
@@ -114,13 +123,13 @@ def visualizing_results(pca_result, label, centroids_pca):
 
 
 def main():
-    print("1. Loading Wine dataset")
+    print("1. Loading Wine dataset\n")
     data_scaled = load_embeddings()
 
-    print("2. Reducing via PCA")
+    print("\n\n2. Reducing via PCA\n")
     pca_result, pca_2 = pca_embeddings(data_scaled)
 
-    print("3. HyperTuning the Parameter for KMeans")
+    print("\n\n3. HyperTuning the Parameter for KMeans\n")
     optimum_num_clusters = kmean_hyper_param_tuning(data_scaled)
     print("optimum num of clusters =", optimum_num_clusters)
 
@@ -130,7 +139,7 @@ def main():
     centroids = kmeans.cluster_centers_
     centroids_pca = pca_2.transform(centroids)
 
-    print("4. Visualizing the data")
+    print("\n\n4. Visualizing the data")
     visualizing_results(pca_result, kmeans.labels_, centroids_pca)
 
 
